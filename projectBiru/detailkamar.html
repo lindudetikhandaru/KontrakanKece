@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Kontrakan - {{ .Nama }}</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body>
+    <div class="container-navbar">
+        <img src="RUMAH.png" class="img-logo" alt="Logo" />
+        <h1 class="teks-kontrakan">KontrakanKece</h1>
+        <ul class="ul-navbar">
+            <li class="li-navbar"><a href="kontrakan.html">Beranda</a></li>
+            <li class="li-navbar"><a href="dafkon.html">Daftar Kontrakan</a></li>
+            <li class="li-navbar"><a href="dafkot.html">Kota Terdaftar</a></li>
+        </ul>
+    </div>
+
+    <div class="container-detail">
+        <div class="breadcrumb">
+            <a href="kontrakan.html">Beranda</a> &gt;
+            <a href="dafkon.html">Daftar Kontrakan</a> &gt;
+            <span>{{ .Kota }}</span> &gt;
+            <span>{{ .Nama }}</span>
+        </div>
+
+        <!-- GALERI FOTO DINAMIS SAMA SERVER GO -->
+        <div class="galeri-grid">
+            <div class="foto-utama">
+                <img src="{{ index .Galeri 0 }}" alt="Foto Utama" />
+            </div>
+            <img src="{{ index .Galeri 1 }}" alt="Foto 2" />
+            <img src="{{ index .Galeri 2 }}" alt="Foto 3" />
+            <img src="{{ index .Galeri 3 }}" alt="Foto 4" />
+            <img src="{{ index .Galeri 4 }}" alt="Foto 5" />
+        </div>
+
+        <div class="content-wrapper">
+            <div class="info-kiri">
+                <span class="badge-tag">Kontrakan Eksklusif</span>
+                <h1 class="judul-kontrakan">{{ .Nama }}</h1>
+                
+                <div class="rating-box">
+                    <span class="score">⭐ 4.8 / 5</span>
+                    <span class="review-count">(760 Review)</span>
+                    <span>•</span>
+                    <span class="lokasi-singkat">📍 {{ .Lokasi }}</span>
+                </div>
+
+                <hr class="pembatas" />
+
+                <div class="tab-menu">
+                    <button class="tab-item active" hx-get="/api/kontrakan/{{ .ID }}/info" hx-target="#tab-content">Deskripsi</button>
+                    <button class="tab-item" hx-get="/api/kontrakan/{{ .ID }}/lokasi" hx-target="#tab-content">Lokasi</button>
+                    <button class="tab-item" hx-get="/api/kontrakan/{{ .ID }}/fasilitas" hx-target="#tab-content">Fasilitas</button>
+                    <button class="tab-item" hx-get="/api/kontrakan/{{ .ID }}/kebijakan" hx-target="#tab-content">Kebijakan</button>
+                    <button class="tab-item" hx-get="/api/kontrakan/{{ .ID }}/review" hx-target="#tab-content">Ulasan</button>
+                </div>
+
+                <div id="tab-content" style="padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; background: #fff; margin-top: 15px;">
+                    <h3>Deskripsi {{ .Nama }}</h3>
+                    <p>{{ .Deskripsi }}</p>
+                </div>
+            </div>
+
+            <div class="box-harga-kanan">
+                <div class="label-mulai">Mulai dari</div>
+                <h2 class="harga-teks">{{ .Harga }} <span class="per-bulan">/bulan</span></h2>
+                <button class="btn-lihat-kamar">Sewa Sekarang</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

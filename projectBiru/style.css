@@ -1,0 +1,549 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif, Arial;
+    background-color: white;
+}
+
+/* ==========================================
+   1. NAVBAR & UNIVERSAL HEADER
+   ========================================== */
+.container-navbar {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 20px 120px;            
+    background-color: white;
+}
+
+.img-logo {
+    width: 60px;
+    height: auto;
+}
+
+.teks-kontrakan {
+    font-size: 28px;
+    color: navy;
+    margin-left: 15px;
+    margin-right: auto; 
+}
+
+.ul-navbar {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 35px;          
+}
+
+.li-navbar a,
+.li-navbar a:visited,
+.li-navbar a:link {
+    color: navy;
+    text-decoration: none; 
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.li-navbar a:hover {
+    color: gray !important;
+    text-decoration: none;
+}
+
+
+/* ==========================================
+   2. DAFTAR KONTRAKAN (dafkon.html)
+   ========================================== */
+.container-content-dafkon {
+    position: relative;
+    width: 100%;
+    min-height: 480px;
+    overflow: hidden;
+    display: block;
+    padding: 0;
+}
+
+.banner-konten {
+    width: 100%;
+    height: 620px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(65%);
+}
+
+.teks-konten {
+    position: absolute;
+    bottom: 60px;
+    left: 120px;
+    max-width: 600px;
+    z-index: 2;
+}
+
+.teks-konten-overlay {
+    color: white;
+    font-size: 42px;
+    font-weight: bold;
+    line-height: 1.25;
+    margin: 0;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.container-katalog {
+    padding: 40px 120px;
+    background-color: #f9f9f9;
+}
+
+.filter-kota {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.button-kota {
+    padding: 10px 20px;
+    border: 1px solid #000080;
+    background-color: white;
+    color: navy;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-block;
+    user-select: none;
+}
+
+.button-kota:hover {
+    background-color: #e0e0f0;
+}
+
+.garis-pembatas {
+    border: none;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 25px 0 15px 0;
+}
+
+.grid-kontrakan {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 30px !important;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.card-kontrakan {
+    width: 280px !important;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-kontrakan:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.img-card {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 16px;
+}
+
+.nama-kontrakan {
+    font-size: 18px;
+    margin: 0 0 8px 0;
+    color: #333;
+}
+
+.rating {
+    font-size: 14px;
+    color: #ff9800;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.lokasi-kontrakan {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 12px 0;
+}
+
+.harga-kontrakan {
+    font-size: 18px;
+    font-weight: bold;
+    color: navy;
+}
+
+.harga-kontrakan span {
+    font-size: 12px;
+    color: #888;
+    font-weight: normal;
+}
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* LOGIKA FILTER KOTA (SESUAIKAN SAMA ID & CLASS HTML) */
+#filter-jakarta:checked ~ .grid-kontrakan .card-link:has(.card-kontrakan:not(.jakarta)),
+#filter-bogor:checked ~ .grid-kontrakan .card-link:has(.card-kontrakan:not(.bogor)),
+#filter-depok:checked ~ .grid-kontrakan .card-link:has(.card-kontrakan:not(.depok)),
+#filter-tangerang:checked ~ .grid-kontrakan .card-link:has(.card-kontrakan:not(.tangerang)),
+#filter-bekasi:checked ~ .grid-kontrakan .card-link:has(.card-kontrakan:not(.bekasi)) {
+    display: none !important;
+}
+
+#filter-semua:checked ~ .filter-kota label[for="filter-semua"],
+#filter-jakarta:checked ~ .filter-kota label[for="filter-jakarta"],
+#filter-bogor:checked ~ .filter-kota label[for="filter-bogor"],
+#filter-depok:checked ~ .filter-kota label[for="filter-depok"],
+#filter-tangerang:checked ~ .filter-kota label[for="filter-tangerang"],
+#filter-bekasi:checked ~ .filter-kota label[for="filter-bekasi"] {
+    background-color: navy;
+    color: white;
+}
+
+
+/* ==========================================
+   3. DETAIL KONTRAKAN (detailkamar.html)
+   ========================================== */
+.container-detail {
+    padding: 20px 120px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.breadcrumb {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+}
+.breadcrumb a {
+    color: navy;
+    text-decoration: none;
+}
+
+/* GALERI GRID 5 FOTO (SUDAH DISESUAIKAN DENGAN HTML) */
+.galeri-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: repeat(2, 180px);
+    gap: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.foto-utama {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+}
+
+.galeri-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+/* TAB MENU TANPA KOTAK (HANYA TEKS & GARIS BAWAH) */
+.tab-menu {
+    display: flex;
+    gap: 25px;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 25px;
+}
+
+.tab-item {
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    padding: 8px 0 10px 0;
+    font-size: 15px;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 3px solid transparent !important;
+    cursor: pointer;
+    outline: none !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease;
+}
+
+.tab-item.active, 
+.tab-item:focus, 
+.tab-item:hover {
+    color: navy !important;
+    border-bottom: 3px solid navy !important;
+    background: transparent !important;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.info-kiri {
+    flex: 2;
+}
+
+.badge-tag {
+    background-color: #e6f0ff;
+    color: navy;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.judul-kontrakan {
+    font-size: 28px;
+    color: #222;
+    margin: 10px 0 5px 0;
+}
+
+.rating-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+.score {
+    font-weight: bold;
+    color: navy;
+}
+
+.pembatas {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+.box-harga-kanan {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    height: fit-content;
+    text-align: right;
+}
+
+.label-mulai {
+    font-size: 12px;
+    color: #777;
+    margin-top: 10px;
+}
+
+.harga-teks {
+    color: #d93025;
+    font-size: 24px;
+    margin: 5px 0 15px 0;
+}
+
+.per-bulan {
+    font-size: 12px;
+    color: #555;
+    font-weight: normal;
+}
+
+.btn-lihat-kamar {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-lihat-kamar:hover {
+    background-color: navy;
+}
+
+.card-review {
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 10px;
+    background-color: #f9f9f9;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.stars {
+    color: #ffb400;
+}
+
+
+/* ==========================================
+   4. KOTA TERDAFTAR (dafkot.html)
+   ========================================== */
+.container-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;   
+    margin-top: 30px;
+    padding-left: 80px;     
+    padding-right: 80px;   
+    gap: 20px;
+}
+
+.judul-kota {
+    font-size: 22px;
+    color: #222;
+    margin: 0;
+}
+
+.list-kota {
+    width: 100%;           
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.box-kota {
+    width: 100%;
+    border: 1px solid #d0d7de;                     
+    border-radius: 8px;                                     
+    background-color: #fff;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); 
+}
+
+.box-kota:hover {
+    border-color: #1a237e;                  
+}
+
+.header-kota {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;        
+    user-select: none;      
+    list-style: none;       
+}
+
+.header-kota::-webkit-details-marker {
+    display: none;
+}
+
+.panah {
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    display: inline-block;
+    transition: transform 0.3s ease; 
+}
+
+/* Memutar panah saat accordion terbuka */
+details[open] .panah {
+    transform: rotate(180deg);
+}
+
+.isi-kota {
+    padding: 15px 20px;
+    border-top: 1px dashed #ccc;
+    background-color: #f9f9f9;
+    animation: slideDown 0.3s ease-out; 
+}
+
+.isi-kota ul {
+    margin-top: 8px;
+    padding-left: 20px;
+}
+
+.isi-kota a {
+    color: #1a237e;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.isi-kota a:hover {
+    text-decoration: underline;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ==========================================
+   5. BERANDA & FOOTER
+   ========================================== */
+.container-beranda {
+    padding: 60px 120px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.judul-beranda {
+    font-size: 28px;
+    color: navy;
+    margin-bottom: 15px;
+}
+
+.teks-beranda {
+    font-size: 16px;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto 25px;
+    line-height: 1.6;
+}
+
+.btn-cta-beranda {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background 0.2s ease;
+}
+
+.btn-cta-beranda:hover {
+    background-color: navy;
+}
+
+.container-footer {
+    padding: 20px 120px;
+    background-color: #f0f0f0;
+    color: #666;
+    font-size: 14px;
+}

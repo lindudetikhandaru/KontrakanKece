@@ -7,32 +7,22 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <!-- NAVBAR -->
     <div class="container-navbar">
         <img src="RUMAH.png" class="img-logo" alt="Logo" />
         <h1 class="teks-kontrakan">KontrakanKece</h1>
-
         <ul class="ul-navbar">
-            <li class="li-navbar">
-                <a href="kontrakan.html">Beranda</a>
-            </li>
-            <li class="li-navbar">
-                <a href="dafkon.html">Daftar Kontrakan</a>
-            </li>
-            <li class="li-navbar">
-                <a href="dafkot.html">Kota Terdaftar</a>
-            </li>
+            <li class="li-navbar"><a href="kontrakan.html">Beranda</a></li>
+            <li class="li-navbar"><a href="dafkon.html">Daftar Kontrakan</a></li>
+            <li class="li-navbar"><a href="dafkot.html">Kota Terdaftar</a></li>
         </ul>
     </div>
-    <!-- NAVBAR SELESAI -->
 
-    <!-- CONTENT 1 -->
     <div class="container-content">
         <h2 class="judul-kota">Kota yang tersedia :</h2>
 
         <div class="list-kota">
-            <!-- KOTA JAKARTA -->
-            <details class="box-kota">
+            <!-- JAKARTA -->
+            <details class="box-kota" open>
                 <summary class="header-kota">
                     <span>Jakarta</span>
                     <span class="panah">v</span>
@@ -40,12 +30,16 @@
                 <div class="isi-kota">
                     <p>Kontrakan tersedia di Jakarta:</p>
                     <ul>
-                        <li><a href="/detail?kota=jakarta">Kontrakan Ancol (Jakarta Utara)</a></li>
+                        {{ range index . "jakarta" }}
+                        <li><a href="/detail?id={{ .ID }}">{{ .Nama }} ({{ .Lokasi }})</a></li>
+                        {{ else }}
+                        <li>Belum ada kontrakan di kota ini.</li>
+                        {{ end }}
                     </ul>
                 </div>
             </details>
 
-            <!-- KOTA BOGOR -->
+            <!-- BOGOR -->
             <details class="box-kota">
                 <summary class="header-kota">
                     <span>Bogor</span>
@@ -54,12 +48,16 @@
                 <div class="isi-kota">
                     <p>Kontrakan tersedia di Bogor:</p>
                     <ul>
-                        <li><a href="/detail?kota=bogor">Kontrakan Mbah Rusdi (Cisarua)</a></li>
+                        {{ range index . "bogor" }}
+                        <li><a href="/detail?id={{ .ID }}">{{ .Nama }} ({{ .Lokasi }})</a></li>
+                        {{ else }}
+                        <li>Belum ada kontrakan di kota ini.</li>
+                        {{ end }}
                     </ul>
                 </div>
             </details>
 
-            <!-- KOTA DEPOK -->
+            <!-- DEPOK -->
             <details class="box-kota">
                 <summary class="header-kota">
                     <span>Depok</span>
@@ -68,12 +66,16 @@
                 <div class="isi-kota">
                     <p>Kontrakan tersedia di Depok:</p>
                     <ul>
-                        <li><a href="/detail?kota=depok">Kontrakan Biru (Margonda)</a></li>
+                        {{ range index . "depok" }}
+                        <li><a href="/detail?id={{ .ID }}">{{ .Nama }} ({{ .Lokasi }})</a></li>
+                        {{ else }}
+                        <li>Belum ada kontrakan di kota ini.</li>
+                        {{ end }}
                     </ul>
                 </div>
             </details>
 
-            <!-- KOTA TANGERANG -->
+            <!-- TANGERANG -->
             <details class="box-kota">
                 <summary class="header-kota">
                     <span>Tangerang</span>
@@ -82,12 +84,16 @@
                 <div class="isi-kota">
                     <p>Kontrakan tersedia di Tangerang:</p>
                     <ul>
-                        <li><a href="/detail?kota=tangerang">Kontrakan Alam Sutera (BSD)</a></li>
+                        {{ range index . "tangerang" }}
+                        <li><a href="/detail?id={{ .ID }}">{{ .Nama }} ({{ .Lokasi }})</a></li>
+                        {{ else }}
+                        <li>Belum ada kontrakan di kota ini.</li>
+                        {{ end }}
                     </ul>
                 </div>
             </details>
 
-            <!-- KOTA BEKASI -->
+            <!-- BEKASI -->
             <details class="box-kota">
                 <summary class="header-kota">
                     <span>Bekasi</span>
@@ -96,21 +102,22 @@
                 <div class="isi-kota">
                     <p>Kontrakan tersedia di Bekasi:</p>
                     <ul>
-                        <li><a href="/detail?kota=bekasi">Kontrakan Ibu Raju (Bekasi)</a></li>
+                        {{ range index . "bekasi" }}
+                        <li><a href="/detail?id={{ .ID }}">{{ .Nama }} ({{ .Lokasi }})</a></li>
+                        {{ else }}
+                        <li>Belum ada kontrakan di kota ini.</li>
+                        {{ end }}
                     </ul>
                 </div>
             </details>
         </div>
     </div>
-    <!-- CONTENT 1 SELESAI -->
     
-    <!-- FOOTER -->
     <footer class="container-footer">
         <p style="margin: 0; line-height: 1.6; font-size: 15px;">
             Ingin daftarkan kontrakanmu?<br>
             <a href="daftar-kontrakan.html" style="color: #2563eb; font-weight: bold; text-decoration: underline;">Klik disini.</a>
         </p>
     </footer>
-    <!-- FOOTER BERES -->
 </body>
 </html>

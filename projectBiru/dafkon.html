@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8" />
@@ -6,120 +7,52 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <!-- NAVBAR -->
     <div class="container-navbar">
         <img src="RUMAH.png" class="img-logo" alt="Logo" />
         <h1 class="teks-kontrakan">KontrakanKece</h1>
-
         <ul class="ul-navbar">
-            <li class="li-navbar">
-                <a href="kontrakan.html">Beranda</a>
-            </li>
-            <li class="li-navbar">
-                <a href="dafkon.html">Daftar Kontrakan</a>
-            </li>
-            <li class="li-navbar">
-                <a href="dafkot.html">Kota Terdaftar</a>
-            </li>
+            <li class="li-navbar"><a href="kontrakan.html">Beranda</a></li>
+            <li class="li-navbar"><a href="dafkon.html">Daftar Kontrakan</a></li>
+            <li class="li-navbar"><a href="dafkot.html">Kota Terdaftar</a></li>
         </ul>
     </div>
-    <!-- NAVBAR SELESAI -->
 
-    <!-- CONTENT 1 -->
     <div class="container-content-dafkon">
         <img src="(G0)Dafkon.png" class="banner-konten" alt="Banner" />
         <div class="teks-konten">
-            <h1 class="teks-konten-overlay">Booking kontrakan murah online dengan harga murah</h1>
+            <h1 class="teks-konten-overlay">Booking kontrakan murah online dengan harga terjangkau</h1>
         </div>
     </div>
 
     <div class="container-katalog">
-        <input type="radio" name="filter-kota" id="filter-semua" checked hidden />
-        <input type="radio" name="filter-kota" id="filter-jakarta" hidden />
-        <input type="radio" name="filter-kota" id="filter-bogor" hidden />
-        <input type="radio" name="filter-kota" id="filter-depok" hidden />
-        <input type="radio" name="filter-kota" id="filter-tangerang" hidden />
-        <input type="radio" name="filter-kota" id="filter-bekasi" hidden />
-
         <div class="filter-kota">
-            <label for="filter-semua" class="button-kota">Semua</label> 
-            <label for="filter-jakarta" class="button-kota">Jakarta</label>
-            <label for="filter-bogor" class="button-kota">Bogor</label>
-            <label for="filter-depok" class="button-kota">Depok</label>
-            <label for="filter-tangerang" class="button-kota">Tangerang</label>
-            <label for="filter-bekasi" class="button-kota">Bekasi</label>
+            <a href="dafkon.html" class="button-kota">Semua</a>
         </div>
 
         <hr class="garis-pembatas" />
     
-        <div class="grid-kontrakan">
-            
-            <!-- KARTU 1 (JAKARTA) -->
-            <a href="/detail?kota=jakarta" class="card-link">
-                <div class="card-kontrakan jakarta">
-                    <img src="(G1)Dafkon.png" class="img-card" alt="Jakarta"/>
+        <div class="grid-kontrakan" style="display: flex; flex-wrap: wrap; gap: 20px;">
+            <!-- LOOPING SELURUH KONTRAKAN TERDAFTAR -->
+            {{ range . }}
+            <a href="/detail?id={{ .ID }}" class="card-link" style="text-decoration: none; color: inherit;">
+                <div class="card-kontrakan {{ .Kota }}">
+                    <img src="{{ .Foto }}" class="img-card" alt="{{ .Nama }}" style="width: 250px; height: 160px; object-fit: cover; border-radius: 8px;"/>
                     <div class="card-body">
-                        <h3 class="nama-kontrakan">Kontrakan Ancol</h3>
+                        <h3 class="nama-kontrakan">{{ .Nama }}</h3>
                         <div class="rating">⭐ 4.8 / 5</div>
-                        <p class="lokasi-kontrakan">📍 Ancol, Jakarta</p>
-                        <div class="harga-kontrakan">Rp 3.200.000 <span>/ bulan</span></div>
+                        <p class="lokasi-kontrakan">📍 {{ .Lokasi }}</p>
+                        <div class="harga-kontrakan">{{ .Harga }} <span>/ bulan</span></div>
                     </div>
                 </div>
             </a>
-
-            <!-- KARTU 2 (BOGOR) -->
-            <a href="/detail?kota=bogor" class="card-link">
-                <div class="card-kontrakan bogor">
-                    <img src="(G2)Dafkon.png" class="img-card" alt="Bogor"/>
-                    <div class="card-body">
-                        <h3 class="nama-kontrakan">Kontrakan Mbah Rusdi</h3>
-                        <div class="rating">⭐ 4.8 / 5</div>
-                        <p class="lokasi-kontrakan">📍 Cisarua, Bogor</p>
-                        <div class="harga-kontrakan">Rp 1.500.000 <span>/ bulan</span></div>
-                    </div>
-                </div>
-            </a>
-
-            <!-- KARTU 3 (DEPOK) -->
-            <a href="/detail?kota=depok" class="card-link">
-                <div class="card-kontrakan depok">
-                    <img src="(G3)Dafkon.png" class="img-card" alt="Depok"/>
-                    <div class="card-body">
-                        <h3 class="nama-kontrakan">Kontrakan Biru</h3>
-                        <div class="rating">⭐ 4.8 / 5</div>
-                        <p class="lokasi-kontrakan">📍 Margonda, Depok</p>
-                        <div class="harga-kontrakan">Rp 2.000.000 <span>/ bulan</span></div>
-                    </div>
-                </div>
-            </a>
-
-            <!-- KARTU 4 (TANGERANG) -->
-            <a href="/detail?kota=tangerang" class="card-link">
-                <div class="card-kontrakan tangerang">
-                    <img src="(G4)Dafkon.png" class="img-card" alt="Tangerang"/>
-                    <div class="card-body">
-                        <h3 class="nama-kontrakan">Kontrakan Alam Sutera</h3>
-                        <div class="rating">⭐ 4.8 / 5</div>
-                        <p class="lokasi-kontrakan">📍 Cenat, Banten</p>
-                        <div class="harga-kontrakan">Rp 2.800.000 <span>/ bulan</span></div>
-                    </div>
-                </div>
-            </a>
-
-            <!-- KARTU 5 (BEKASI) -->
-            <a href="/detail?kota=bekasi" class="card-link">
-                <div class="card-kontrakan bekasi">
-                    <img src="(G5)Dafkon.png" class="img-card" alt="Bekasi"/>
-                    <div class="card-body">
-                        <h3 class="nama-kontrakan">Kontrakan Ibu Raju</h3>
-                        <div class="rating">⭐ 4.8 / 5</div>
-                        <p class="lokasi-kontrakan">📍 Bekasi, Jawa Barat</p>
-                        <div class="harga-kontrakan">Rp 2.500.000 <span>/ bulan</span></div>
-                    </div>
-                </div>
-            </a>
+            {{ else }}
+            <p>Belum ada kontrakan yang terdaftar.</p>
+            {{ end }}
         </div>
     </div>
-    <!-- CONTENT 1 SELESAI -->
+
+    <footer class="container-footer">
+        <p>&copy; 2026 KontrakanKece. All Rights Reserved.</p>
+    </footer>
 </body>
 </html>

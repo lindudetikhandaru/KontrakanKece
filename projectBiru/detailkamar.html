@@ -5,7 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Kontrakan - {{ .Nama }}</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 14px;
+            max-width: 380px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
+            animation: popup 0.25s ease-out;
+        }
+        @keyframes popup {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .close-btn {
+            position: absolute;
+            top: 12px; right: 16px;
+            font-size: 24px; font-weight: bold;
+            cursor: pointer; color: #64748b;
+        }
+        .close-btn:hover { color: #0f172a; }
+    </style>
 </head>
 <body>
     <div class="container-navbar">
@@ -18,59 +51,107 @@
         </ul>
     </div>
 
-    <div class="container-detail">
-        <div class="breadcrumb">
-            <a href="kontrakan.html">Beranda</a> &gt;
-            <a href="dafkon.html">Daftar Kontrakan</a> &gt;
-            <span>{{ .Kota }}</span> &gt;
-            <span>{{ .Nama }}</span>
-        </div>
-
-        <!-- GALERI FOTO DINAMIS SAMA SERVER GO -->
-        <div class="galeri-grid">
-            <div class="foto-utama">
-                <img src="{{ index .Galeri 0 }}" alt="Foto Utama" />
+    <div class="container-detail" style="max-width: 1000px; margin: 20px auto; padding: 0 20px;">
+        <p class="breadcrumb" style="margin-bottom: 20px; color: #555;">
+            <a href="kontrakan.html">Beranda</a> &gt; 
+            <a href="dafkon.html">Daftar Kontrakan</a> &gt; 
+            {{ .Kota }} &gt; <b>{{ .Nama }}</b>
+        </p>
+        
+        <div style="display: flex; gap: 30px; align-items: flex-start; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 300px; display: flex; gap: 10px;">
+                <img src="{{ .Foto }}" alt="{{ .Nama }}" style="width: 65%; height: 260px; object-fit: cover; border-radius: 12px; border: 1px solid #ddd;">
+                <img src="(G0)Dafkon.png" alt="Galeri" style="width: 32%; height: 260px; object-fit: cover; border-radius: 12px; border: 1px solid #ddd;">
             </div>
-            <img src="{{ index .Galeri 1 }}" alt="Foto 2" />
-            <img src="{{ index .Galeri 2 }}" alt="Foto 3" />
-            <img src="{{ index .Galeri 3 }}" alt="Foto 4" />
-            <img src="{{ index .Galeri 4 }}" alt="Foto 5" />
-        </div>
 
-        <div class="content-wrapper">
-            <div class="info-kiri">
-                <span class="badge-tag">Kontrakan Eksklusif</span>
-                <h1 class="judul-kontrakan">{{ .Nama }}</h1>
+            <div style="flex: 1; min-width: 300px;">
+                <h1 style="font-size: 28px; margin: 0 0 10px 0; color: #1e293b;">{{ .Nama }}</h1>
+                <p style="color: #64748b; margin-bottom: 20px; font-size: 15px;">📍 {{ .Lokasi }}</p>
                 
-                <div class="rating-box">
-                    <span class="score">⭐ 4.8 / 5</span>
-                    <span class="review-count">(760 Review)</span>
-                    <span>•</span>
-                    <span class="lokasi-singkat">📍 {{ .Lokasi }}</span>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 10px; margin-bottom: 20px;">
+                    <span style="font-size: 13px; color: #64748b; font-weight: 600; text-transform: uppercase;">Harga Sewa</span>
+                    <h2 style="color: #2563eb; margin: 6px 0 0 0; font-size: 26px;">{{ .Harga }} <span style="font-size: 15px; font-weight: normal; color: #64748b;">/ bulan</span></h2>
                 </div>
 
-                <hr class="pembatas" />
-
-                <div class="tab-menu">
-                    <button class="tab-item active" hx-get="/api/kontrakan/{{ .ID }}/info" hx-target="#tab-content">Deskripsi</button>
-                    <button class="tab-item" hx-get="/api/kontrakan/{{ .ID }}/lokasi" hx-target="#tab-content">Lokasi</button>
-                    <button class="tab-item" hx-get="/api/kontrakan/{{ .ID }}/fasilitas" hx-target="#tab-content">Fasilitas</button>
-                    <button class="tab-item" hx-get="/api/kontrakan/{{ .ID }}/kebijakan" hx-target="#tab-content">Kebijakan</button>
-                    <button class="tab-item" hx-get="/api/kontrakan/{{ .ID }}/review" hx-target="#tab-content">Ulasan</button>
-                </div>
-
-                <div id="tab-content" style="padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; background: #fff; margin-top: 15px;">
-                    <h3>Deskripsi {{ .Nama }}</h3>
-                    <p>{{ .Deskripsi }}</p>
-                </div>
+                <button onclick="openPaymentModal()" style="width: 100%; padding: 14px; background: #2563eb; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer;">
+                    Hubungi Pemilik & Bayar Sewa
+                </button>
             </div>
+        </div>
 
-            <div class="box-harga-kanan">
-                <div class="label-mulai">Mulai dari</div>
-                <h2 class="harga-teks">{{ .Harga }} <span class="per-bulan">/bulan</span></h2>
-                <button class="btn-lihat-kamar">Sewa Sekarang</button>
-            </div>
+        <div style="margin-top: 40px; border-bottom: 2px solid #e2e8f0; display: flex; gap: 20px;">
+            <button onclick="loadTabContent('deskripsi')" style="padding: 10px 15px; background: none; border: none; border-bottom: 3px solid #2563eb; cursor: pointer; font-weight: bold; color: #2563eb;">Deskripsi</button>
+            <button onclick="loadTabContent('lokasi')" style="padding: 10px 15px; background: none; border: none; cursor: pointer; font-weight: bold; color: #64748b;">Lokasi</button>
+            <button onclick="loadTabContent('fasilitas')" style="padding: 10px 15px; background: none; border: none; cursor: pointer; font-weight: bold; color: #64748b;">Fasilitas</button>
+            <button onclick="loadTabContent('kebijakan')" style="padding: 10px 15px; background: none; border: none; cursor: pointer; font-weight: bold; color: #64748b;">Kebijakan</button>
+            <button onclick="loadTabContent('review')" style="padding: 10px 15px; background: none; border: none; cursor: pointer; font-weight: bold; color: #64748b;">Ulasan</button>
+        </div>
+
+        <div id="tab-content" style="padding: 20px 0; min-height: 120px; color: #334155; line-height: 1.6;">
+            <p>{{ .Deskripsi }}</p>
         </div>
     </div>
+
+    <!-- MODAL CONTAINER (Wajib Memiliki id="paymentModal") -->
+    <div id="paymentModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closePaymentModal()">&times;</span>
+            <h3 style="margin: 0 0 6px 0; color: #0f172a; font-size: 20px;">Pembayaran Sewa</h3>
+            <p style="color: #64748b; font-size: 13px; margin: 0 0 16px 0;">
+                Silakan scan QRIS untuk pembayaran <b>{{ .Nama }}</b> ({{ .Kota }}).
+            </p>
+
+            <div style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px dashed #cbd5e1; display: inline-block;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=KontrakanKece-{{ .ID }}" alt="QR Code Pembayaran" style="width: 170px; height: 170px; border-radius: 6px; display: block;">
+            </div>
+
+            <div style="margin-top: 16px; text-align: left; background: #f1f5f9; padding: 12px; border-radius: 8px; font-size: 13px; color: #334155;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                    <span>Total Tagihan:</span>
+                    <strong style="color: #2563eb;">{{ .Harga }}</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span>Metode:</span>
+                    <strong>QRIS (BCA, GoPay, OVO, Dana)</strong>
+                </div>
+            </div>
+
+            <button onclick="konfirmasiBayar()" style="margin-top: 16px; width: 100%; padding: 12px; background: #16a34a; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer;">
+                Konfirmasi Pembayaran Selesai
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function loadTabContent(tabName) {
+            const kontrakanId = "{{ .ID }}";
+            fetch('/api/kontrakan/' + kontrakanId + '/' + tabName)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('tab-content').innerHTML = html;
+                })
+                .catch(err => console.error('Gagal mengambil data tab:', err));
+        }
+
+        function openPaymentModal() {
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        function konfirmasiBayar() {
+            alert('Terima kasih! Bukti pembayaran sewa {{ .Nama }} sedang diproses oleh pemilik.');
+            closePaymentModal();
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('paymentModal');
+            if (event.target === modal) {
+                closePaymentModal();
+            }
+        };
+    </script>
 </body>
 </html>
